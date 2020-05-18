@@ -1,4 +1,4 @@
-import { CatsApi } from '../index';
+import { CatsApi } from '../generated-client/index';
 
 const api = new CatsApi({ basePath: 'http://localhost:3000'});
 
