@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cats example",
+    "description": "The cats API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [{ "name": "cats", "description": "" }],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CatDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "name": { "type": "string" },
+          "color": { "type": "string" },
+          "birthDate": { "format": "date-time", "type": "string" }
+        },
+        "required": ["id", "name", "color", "birthDate"]
+      },
+      "CreateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "color": { "type": "string" },
+          "age": { "type": "number" },
+          "birthDate": { "format": "date-time", "type": "string" }
+        },
+        "required": ["name", "color", "age", "birthDate"]
+      },
+      "UpdateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "color": { "type": "string" },
+          "age": { "type": "number" },
+          "birthDate": { "format": "date-time", "type": "string" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1/cats": {
+      "get": {
+        "operationId": "AppController_getAll",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "search cat by name",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CatDto" }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["cats"]
+      },
+      "post": {
+        "operationId": "AppController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateCatDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The record has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CatDto" }
+              }
+            }
+          }
+        },
+        "tags": ["cats"]
+      }
+    },
+    "/v1/cats/{id}": {
+      "get": {
+        "operationId": "AppController_getbyId",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CatDto" }
+              }
+            }
+          }
+        },
+        "tags": ["cats"]
+      },
+      "put": {
+        "operationId": "AppController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateCatDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CatDto" }
+              }
+            }
+          }
+        },
+        "tags": ["cats"]
+      },
+      "delete": {
+        "operationId": "AppController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "The record has been deleted" }
+        },
+        "tags": ["cats"]
+      }
+    }
+  }
+}
